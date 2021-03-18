@@ -73,6 +73,8 @@ class Client(object):
             data['encryption'] = changes['encryption'] if 'encryption' in changes else data['verify_certificate']
         del data['verify_certificate']  # 'verify_certificate' is not a valid parameter
         del data["type"]  # type can't be changed
+        del data["lastdownstart"]
+        del data["lastdownend"]
         self.api.send(method='put', resource='checks', resource_id=check._id, data=data)
         check.from_json(self.api.send('get', "checks", check._id)['check'])
         return check
